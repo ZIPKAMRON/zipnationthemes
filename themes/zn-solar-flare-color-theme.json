@@ -1,0 +1,77 @@
+{
+  "name": "ZN Solar Flare",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#0F0B08",
+    "editor.foreground": "#FFF1D6",
+    "editorCursor.foreground": "#FFB000",
+    "editor.lineHighlightBackground": "#543512",
+    "editor.selectionBackground": "#543512",
+    "editorIndentGuide.background1": "#3B2917",
+    "editorIndentGuide.activeBackground1": "#FFB000",
+    "editorLineNumber.foreground": "#9B8468",
+    "editorLineNumber.activeForeground": "#FFB000",
+    "editorWidget.background": "#1A130D",
+    "editorWidget.border": "#3B2917",
+    "sideBar.background": "#1A130D",
+    "sideBar.foreground": "#FFF1D6",
+    "sideBar.border": "#3B2917",
+    "activityBar.background": "#0F0B08",
+    "activityBar.foreground": "#FFB000",
+    "statusBar.background": "#1A130D",
+    "statusBar.foreground": "#FFF1D6",
+    "titleBar.activeBackground": "#1A130D",
+    "titleBar.activeForeground": "#FFF1D6",
+    "tab.activeBackground": "#0F0B08",
+    "tab.activeForeground": "#FFF1D6",
+    "tab.inactiveBackground": "#1A130D",
+    "tab.inactiveForeground": "#9B8468",
+    "panel.background": "#1A130D",
+    "panel.border": "#3B2917",
+    "terminal.background": "#0F0B08",
+    "terminal.foreground": "#FFF1D6",
+    "terminal.ansiGreen": "#FFD166",
+    "terminal.ansiYellow": "#FF8A00",
+    "terminal.ansiBlue": "#FFE08A",
+    "terminal.ansiMagenta": "#FFB000",
+    "terminal.ansiCyan": "#FFB84D"
+  },
+  "tokenColors": [
+    {
+      "scope": ["comment", "punctuation.definition.comment"],
+      "settings": { "foreground": "#9B8468", "fontStyle": "italic" }
+    },
+    {
+      "scope": ["keyword", "storage", "storage.type", "storage.modifier"],
+      "settings": { "foreground": "#FF8A00" }
+    },
+    {
+      "scope": ["string", "constant.other.symbol"],
+      "settings": { "foreground": "#FFD166" }
+    },
+    {
+      "scope": ["entity.name.function", "support.function", "meta.function-call"],
+      "settings": { "foreground": "#FFB84D" }
+    },
+    {
+      "scope": ["entity.name.type", "support.type", "storage.type.class"],
+      "settings": { "foreground": "#FFE08A" }
+    },
+    {
+      "scope": ["variable", "variable.other", "meta.definition.variable"],
+      "settings": { "foreground": "#FFF1D6" }
+    },
+    {
+      "scope": ["constant.numeric", "constant.language", "constant.character"],
+      "settings": { "foreground": "#FFB000" }
+    },
+    {
+      "scope": ["entity.name.tag", "entity.other.attribute-name"],
+      "settings": { "foreground": "#FFB000" }
+    },
+    {
+      "scope": ["invalid"],
+      "settings": { "foreground": "#FFFFFF", "background": "#B42318" }
+    }
+  ]
+}

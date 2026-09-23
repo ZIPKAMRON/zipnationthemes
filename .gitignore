@@ -1,0 +1,39 @@
+# ZIPNATION public repository hygiene
+
+# Build/release output
+*.vsix
+*.vsix.backup
+*.tgz
+dist/
+out/
+build/
+
+# Dependencies
+node_modules/
+
+# Secrets / local licensing data
+.env
+.env.*
+!.env.example
+vip-codes.json
+secrets/
+
+# Development/automation scripts
+*.ps1
+*.bat
+*.cmd
+*.sh
+*.log
+
+# Local editor/OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary/backup data
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+backups/

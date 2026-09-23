@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050505"/>
+      <stop offset="100%" stop-color="#B7B7B7" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" rx="28" fill="url(#g)"/>
+  <rect x="35" y="35" width="1130" height="630" rx="20" fill="#050505" stroke="#B7B7B7" stroke-opacity="0.55" stroke-width="3"/>
+  <rect x="65" y="75" width="240" height="550" rx="12" fill="#B7B7B7" fill-opacity="0.10"/>
+  <rect x="330" y="75" width="805" height="65" rx="10" fill="#B7B7B7" fill-opacity="0.13"/>
+  <rect x="330" y="165" width="805" height="460" rx="12" fill="#000000" fill-opacity="0.16"/>
+  <circle cx="105" cy="115" r="12" fill="#B7B7B7"/>
+  <circle cx="145" cy="115" r="12" fill="#B7B7B7" fill-opacity="0.65"/>
+  <circle cx="185" cy="115" r="12" fill="#B7B7B7" fill-opacity="0.35"/>
+  <text x="95" y="210" font-family="Montserrat, Arial, sans-serif" font-size="30" font-weight="700" fill="#F2F2F2">ZIPNATION</text>
+  <text x="95" y="255" font-family="Arial, sans-serif" font-size="20" fill="#B7B7B7">THEME STORE</text>
+  <text x="95" y="585" font-family="Arial, sans-serif" font-size="18" fill="#F2F2F2" fill-opacity="0.72">ZN Obsidian</text>
+  <text x="365" y="112" font-family="Consolas, monospace" font-size="22" fill="#F2F2F2">~/vscode/project</text>
+  <text x="380" y="225" font-family="Consolas, monospace" font-size="22" fill="#B7B7B7">const</text>
+  <text x="455" y="225" font-family="Consolas, monospace" font-size="22" fill="#F2F2F2"> zipnation = </text>
+  <text x="610" y="225" font-family="Consolas, monospace" font-size="22" fill="#B7B7B7">true</text>
+  <text x="380" y="275" font-family="Consolas, monospace" font-size="22" fill="#F2F2F2">Theme Store // ZN Obsidian</text>
+  <rect x="380" y="330" width="520" height="14" rx="7" fill="#B7B7B7" fill-opacity="0.25"/>
+  <rect x="380" y="370" width="420" height="14" rx="7" fill="#B7B7B7" fill-opacity="0.16"/>
+  <rect x="380" y="410" width="600" height="14" rx="7" fill="#B7B7B7" fill-opacity="0.20"/>
+  <rect x="380" y="500" width="220" height="58" rx="12" fill="#B7B7B7" fill-opacity="0.18" stroke="#B7B7B7" stroke-width="2"/>
+  <text x="425" y="537" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#F2F2F2">USE THEME</text>
+</svg>

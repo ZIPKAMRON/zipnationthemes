@@ -1,0 +1,102 @@
+{
+    "name":  "zipnation-vip-themes",
+    "displayName":  "ZIPNATION VIP Themes",
+    "description":  "ZIPNATION Theme Store: 2 free themes and 8 premium VIP themes for VS Code.",
+    "version":  "1.0.0",
+    "publisher":  "zipnation",
+    "repository":  {
+                       "type":  "git",
+                       "url":  "https://github.com/ZIPKAMRON/zipnationthemes.git"
+                   },
+    "main":  "./extension.js",
+    "icon":  "./assets/icon.png",
+    "activationEvents":  [
+                             "onStartupFinished"
+                         ],
+    "license":  "SEE LICENSE IN LICENSE.txt",
+    "engines":  {
+                    "vscode":  "^1.80.0"
+                },
+    "categories":  [
+                       "Themes"
+                   ],
+    "keywords":  [
+                     "theme",
+                     "themes",
+                     "vs-code-theme",
+                     "vscode",
+                     "zipnation",
+                     "vip",
+                     "dark-theme",
+                     "light-theme"
+                 ],
+    "contributes":  {
+                        "commands":  [
+                                         {
+                                             "command":  "zipnation.openThemeStore",
+                                             "title":  "ZIPNATION: Theme Store"
+                                         }
+                                     ],
+                        "themes":  [
+                                       {
+                                           "label":  "ZN Night Gold",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-night-gold-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Ivory",
+                                           "uiTheme":  "vs",
+                                           "path":  "./themes/zn-ivory-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Emerald Royale",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-emerald-royale-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Rose Royale",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-rose-royale-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Midnight Spire",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-midnight-spire-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Obsidian",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-obsidian-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Solar Flare",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-solar-flare-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Nordic",
+                                           "uiTheme":  "vs",
+                                           "path":  "./themes/zn-nordic-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Nordic Dark",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-nordic-dark-color-theme.json"
+                                       },
+                                       {
+                                           "label":  "ZN Cyberpunk",
+                                           "uiTheme":  "vs-dark",
+                                           "path":  "./themes/zn-cyberpunk-color-theme.json"
+                                       }
+                                   ]
+                    },
+    "pricing":  "Free",
+    "homepage":  "https://github.com/ZIPKAMRON/zipnationthemes",
+    "bugs":  {
+                 "url":  "https://github.com/ZIPKAMRON/zipnationthemes/issues"
+             },
+    "galleryBanner":  {
+                          "color":  "#0A0A0A",
+                          "theme":  "dark"
+                      }
+}

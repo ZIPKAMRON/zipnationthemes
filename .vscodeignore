@@ -1,0 +1,13 @@
+.vscode/**
+.git/**
+.gitignore
+*.ps1
+*.bat
+*.cmd
+*.sh
+*.log
+*.vsix
+*.vsix.backup
+vip-codes.json
+tools/**
+node_modules/**
