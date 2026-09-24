@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- **Theme Store Polish & Redesign**: Dynamic adaptive color styling based on the active theme, official ZIPNATION icon branding (`icon.png`), and responsive theme card previews.
+- **Real-Time Telemetry & Analytics**: Integrated live event tracking with centralized dashboard for downloads, active IDEs, OS statistics, and theme preferences.
+- **Enhanced VIP License Verification**: Instant code lookup, online validation with robust offline fallback, and improved status indicators.
+
 ## 1.1.0
 
 - **Universal VIP License (Production Beta)**: Cryptographic Ed25519 signature verification (zero external dependencies).
