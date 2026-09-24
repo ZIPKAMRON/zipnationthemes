@@ -7,6 +7,8 @@ All notable changes to the **ZIPNATION VIP Themes** extension will be documented
 ### Added
 - **Multilingual Theme Store**: Complete localization with instant switcher for English (`EN`, default), Russian (`RU`), and Uzbek (`UZ`).
 - **In-Store Feedback & Bug Report System**: Built-in interactive drawer in the Theme Store (`💬 Feedback`) allowing users to submit theme ideas, suggestions, and bug reports directly to the developer telemetry server.
+- **Active Real-Time License Revocation Enforcement**: Clients dynamically check revocation with the central verification server on startup, theme changes, store opening, and via background intervals; revoked licenses automatically revert to free `ZN Night Gold` with an alert notification.
+- **Authentic Multi-Colored Theme Previews**: All 10 theme preview SVGs updated with rich realistic code editor windows, syntax highlighting matching theme definitions, and theme badges.
 - **Advanced Admin Dashboard (v1.3.0)**:
   - Added dedicated **Users & Devices** section with 100-per-page pagination, search filter, and active vs. uninstalled/inactive device tracking.
   - Added quick 1-click license revocation and status filter tabs (`Barchasi`, `Faol`, `O'chirilganlar`, `Muddati O'tgan`).
@@ -17,6 +19,7 @@ All notable changes to the **ZIPNATION VIP Themes** extension will be documented
 ### Fixed
 - Fixed client-side script syntax in admin dashboard preventing button interaction on certain browsers.
 - Improved session authentication fallback for all administrative REST endpoints.
+- Enforced automatic reversion to `ZN Night Gold` when a license is cancelled in the admin dashboard.
 
 ---
 

@@ -1,7 +1,7 @@
 const vscode = require("vscode");
 const crypto = require("crypto");
 const http = require("http");
-const { verifyLicenseToken, getDaysRemaining, formatExpiration, fetchLicenseByCode } = require("./lib/license");
+const { verifyLicenseToken, getDaysRemaining, formatExpiration, fetchLicenseByCode, verifyLicenseOnline } = require("./lib/license");
 const { trackEvent } = require("./lib/telemetry");
 
 const FREE_THEME = "ZN Night Gold";
@@ -342,7 +342,60 @@ async function deactivateVip(context) {
   vscode.window.showInformationMessage("ZIPNATION: VIP deactivated. Reverted to free theme.");
 }
 
+let isCheckingOnline = false;
+
+/**
+ * Verify current VIP license status with central server.
+ * If server says REVOKED or EXPIRED, clear local token and revert to ZN Night Gold immediately.
+ */
+async function checkLicenseStatusOnline(context) {
+  if (isCheckingOnline) return;
+  const token = context.globalState.get("vipLicenseToken", "");
+  const licId = context.globalState.get("vipLicenseId", "");
+  if (!token && !licId) return;
+
+  isCheckingOnline = true;
+  try {
+    const res = await verifyLicenseOnline(licId || token);
+    if (res.online && (!res.valid || res.status === "REVOKED" || res.status === "EXPIRED")) {
+      const currentTheme = vscode.workspace.getConfiguration("workbench").get("colorTheme");
+      const wasRevoked = res.status === "REVOKED";
+
+      // Clear local VIP tokens
+      await context.globalState.update("vipLicenseToken", "");
+      await context.globalState.update("vipLicenseId", "");
+      await context.globalState.update("vipCustomer", "");
+
+      // If currently using a VIP theme, revert immediately to free theme
+      if (VIP_THEMES.has(currentTheme)) {
+        await useFreeTheme();
+      }
+
+      if (wasRevoked) {
+        trackEvent("license_revoked_enforced", { license_id: licId });
+        vscode.window.showWarningMessage(
+          'ZIPNATION: VIP Litsenziyangiz bekor qilingan! Standart bepul "ZN Night Gold" mavzusiga qaytarildi.'
+        );
+      } else {
+        trackEvent("license_expired_enforced", { license_id: licId });
+        vscode.window.showWarningMessage(
+          'ZIPNATION: VIP Litsenziyangiz muddati tugagan! Standart bepul "ZN Night Gold" mavzusiga qaytarildi.'
+        );
+      }
+
+      if (currentStorePanel && currentStorePanel.webview) {
+        currentStorePanel.webview.html = storeHtml(context, currentStorePanel.webview);
+      }
+    }
+  } catch (err) {
+    // Network or server temporarily unreachable, keep offline cryptotoken
+  } finally {
+    isCheckingOnline = false;
+  }
+}
+
 async function showLicenseStatus(context) {
+  await checkLicenseStatusOnline(context);
   const info = getLicenseInfo(context);
   if (info.active && info.payload) {
     vscode.window.showInformationMessage(
@@ -350,6 +403,8 @@ async function showLicenseStatus(context) {
     );
   } else if (info.state === "EXPIRED") {
     vscode.window.showWarningMessage(`ZIPNATION VIP EXPIRED\nExpired on ${info.formattedExpires}. Please renew license.`);
+  } else if (info.state === "REVOKED") {
+    vscode.window.showErrorMessage("ZIPNATION VIP REVOKED\nLitsenziyangiz bekor qilingan.");
   } else {
     vscode.window.showInformationMessage("ZIPNATION: Free plan (ZN Night Gold and ZN Ivory).");
   }
@@ -357,6 +412,9 @@ async function showLicenseStatus(context) {
 
 async function applyTheme(context, themeName) {
   if (!THEMES.some(t => t.name === themeName)) return;
+  if (VIP_THEMES.has(themeName)) {
+    await checkLicenseStatusOnline(context);
+  }
   const licInfo = getLicenseInfo(context);
   if (VIP_THEMES.has(themeName) && !licInfo.active) {
     trackEvent("vip_blocked", { theme: themeName, reason: "store_click_unlicensed" });
@@ -380,23 +438,26 @@ let isGuardingTheme = false;
 async function guardTheme(context) {
   if (isGuardingTheme) return;
   const current = vscode.workspace.getConfiguration("workbench").get("colorTheme");
-  if (!vipActivated(context) && VIP_THEMES.has(current)) {
-    isGuardingTheme = true;
-    try {
-      await useFreeTheme();
-      trackEvent("vip_blocked", { theme: current, reason: "unlicensed_direct_selection" });
-      const action = await vscode.window.showErrorMessage(
-        `🔒 "${current}" is a ZIPNATION VIP premium theme. Active VIP license required. Reverted to free "ZN Night Gold".`,
-        "Enter VIP License",
-        "Open Store"
-      );
-      if (action === "Enter VIP License") {
-        await activateVip(context);
-      } else if (action === "Open Store") {
-        await openThemeStore(context);
+  if (VIP_THEMES.has(current)) {
+    await checkLicenseStatusOnline(context);
+    if (!vipActivated(context)) {
+      isGuardingTheme = true;
+      try {
+        await useFreeTheme();
+        trackEvent("vip_blocked", { theme: current, reason: "unlicensed_direct_selection" });
+        const action = await vscode.window.showErrorMessage(
+          `🔒 "${current}" is a ZIPNATION VIP premium theme. Active VIP license required. Reverted to free "ZN Night Gold".`,
+          "Enter VIP License",
+          "Open Store"
+        );
+        if (action === "Enter VIP License") {
+          await activateVip(context);
+        } else if (action === "Open Store") {
+          await openThemeStore(context);
+        }
+      } finally {
+        isGuardingTheme = false;
       }
-    } finally {
-      isGuardingTheme = false;
     }
   }
 }
@@ -1054,6 +1115,7 @@ let currentStorePanel = null;
 
 async function openThemeStore(context) {
   trackEvent("store_open");
+  checkLicenseStatusOnline(context);
   if (currentStorePanel) {
     currentStorePanel.reveal(vscode.ViewColumn.One);
     return;
@@ -1183,6 +1245,11 @@ function activate(context) {
   );
 
   guardTheme(context);
+
+  // Online revocation verification check
+  setTimeout(() => checkLicenseStatusOnline(context), 1200);
+  const onlineCheckTimer = setInterval(() => checkLicenseStatusOnline(context), 60 * 1000);
+  context.subscriptions.push({ dispose: () => clearInterval(onlineCheckTimer) });
 
   if (seenVersion !== VERSION) {
     context.globalState.update("zipnation.storeVersion", VERSION);
