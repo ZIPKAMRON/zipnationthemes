@@ -99,6 +99,7 @@ async function activateWithToken(context, rawInput) {
     vscode.window.showInformationMessage("ZIPNATION: Server tekshirilmoqda...");
     const lookup = await fetchLicenseByCode(input);
     if (!lookup.success || !lookup.token) {
+      trackEvent("license_failed", { reason: lookup.error || "not_found", code_prefix: input.slice(0, 8) });
       vscode.window.showErrorMessage(`ZIPNATION: ${lookup.error || "Litsenziya topilmadi yoki nofaol."}`);
       return false;
     }
@@ -107,6 +108,7 @@ async function activateWithToken(context, rawInput) {
 
   const result = verifyLicenseToken(tokenToVerify);
   if (!result.valid) {
+    trackEvent("license_failed", { reason: result.state || result.reason || "invalid" });
     if (result.state === "EXPIRED") {
       vscode.window.showErrorMessage(`ZIPNATION: Litsenziya muddati o'tgan — ${result.payload ? formatExpiration(result.payload.expires_at) : ""}.`);
     } else if (result.state === "REVOKED") {
@@ -172,11 +174,12 @@ async function applyTheme(context, themeName) {
   if (!THEMES.some(t => t.name === themeName)) return;
   const licInfo = getLicenseInfo(context);
   if (VIP_THEMES.has(themeName) && !licInfo.active) {
+    trackEvent("vip_blocked", { theme: themeName, reason: "store_click_unlicensed" });
     const promptMsg = licInfo.state === "EXPIRED"
-      ? `${themeName} uchun faol VIP kerak. Litsenziya ${licInfo.formattedExpires}da tugagan.`
-      : `${themeName} ZIPNATION VIP to'plamiga kiradi.`;
-    const action = await vscode.window.showInformationMessage(promptMsg, "Litsenziya kiriting", "Night Gold ishlatish");
-    if (action === "Litsenziya kiriting") {
+      ? `🔒 "${themeName}" uchun faol VIP kerak. Litsenziyangiz ${licInfo.formattedExpires}da tugagan.`
+      : `🔒 "${themeName}" — ZIPNATION VIP to'plamiga kiradi!`;
+    const action = await vscode.window.showInformationMessage(promptMsg, "Litsenziya kiritish", "Night Gold ishlatish");
+    if (action === "Litsenziya kiritish") {
       const ok = await activateVip(context);
       if (ok) { await useTheme(themeName); trackEvent("theme_used", { theme: themeName }); return; }
     }
@@ -188,9 +191,29 @@ async function applyTheme(context, themeName) {
   vscode.window.showInformationMessage(`${themeName} joriy qilindi.`);
 }
 
+let isGuardingTheme = false;
 async function guardTheme(context) {
+  if (isGuardingTheme) return;
   const current = vscode.workspace.getConfiguration("workbench").get("colorTheme");
-  if (!vipActivated(context) && VIP_THEMES.has(current)) await useFreeTheme();
+  if (!vipActivated(context) && VIP_THEMES.has(current)) {
+    isGuardingTheme = true;
+    try {
+      await useFreeTheme();
+      trackEvent("vip_blocked", { theme: current, reason: "unlicensed_direct_selection" });
+      const action = await vscode.window.showErrorMessage(
+        `🔒 "${current}" — ZIPNATION VIP premium mavzusi! Undan foydalanish uchun faol VIP litsenziya talab qilinadi. Bepul "ZN Night Gold" mavzusiga qaytarildi.`,
+        "VIP Litsenziya Kiritish",
+        "Do'konni Ochish"
+      );
+      if (action === "VIP Litsenziya Kiritish") {
+        await activateVip(context);
+      } else if (action === "Do'konni Ochish") {
+        await openThemeStore(context);
+      }
+    } finally {
+      isGuardingTheme = false;
+    }
+  }
 }
 
 // ──────────────────────── STORE HTML ────────────────────────
