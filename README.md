@@ -1,51 +1,92 @@
-# ZIPNATION VIP Themes
+# ZIPNATION VIP Themes · v1.3.0
 
-Premium dark VS Code color themes by **ZIPNATION**.
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/zipnation.zipnation-vip-themes?color=d2ad37&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=zipnation.zipnation-vip-themes)
+[![Open VSX](https://img.shields.io/badge/Open%20VSX-v1.0.0-orange)](https://open-vsx.org/extension/zipnation/zipnation-vip-themes)
+[![License](https://img.shields.io/badge/License-VIP%20Commercial-blue.svg)](LICENSE.txt)
 
-## Themes
+> **The definitive luxury theme collection for modern code editors.**  
+> Crafted by **ZIPNATION** with meticulously calibrated syntax contrast, warm radiant gold accents, deep OLED surfaces, and architectural color balance.
 
-### FREE
-- **ZN Night Gold** (Signature black canvas, warm ivory syntax and signature gold)
-- **ZN Ivory** (Clean, minimal light aesthetic with champagne accents)
+---
 
-### VIP Collection · $4 each
-- **ZN Emerald Royale** (Deep emerald surfaces with refined gold accents)
-- **ZN Rose Royale** (Dark plum surfaces with rose-metal highlights)
-- **ZN Midnight Spire** (Midnight blue surfaces with architectural gold accents)
-- **ZN Obsidian** (True pitch-black OLED surfaces with obsidian luster)
-- **ZN Solar Flare** (High contrast ember accents on deep charcoal)
-- **ZN Nordic** (Crisp arctic daylight palette with balanced syntax)
-- **ZN Nordic Dark** (Sub-zero polar night aesthetic with glacial highlights)
-- **ZN Cyberpunk** (High-voltage neon pink and electric cyan contrast)
+## 🎨 Theme Collection (10 Themes)
 
-**Total: 10 themes · 2 FREE · 8 VIP**
+### 🌟 2 Free Themes (Included Forever)
+1. **ZN Night Gold** — *Signature black canvas, warm radiant gold syntax and ivory text. Classic, warm, and easy on the eyes.*
+2. **ZN Ivory** — *Clean, minimalist light aesthetic with warm champagne cream accents and balanced daytime contrast.*
 
-## Theme Store
+### 👑 8 VIP Premium Themes (Universal VIP Access)
+3. **ZN Emerald Royale** — *Rich royal emerald green surface with regal gold accents and vivid keyword highlights.*
+4. **ZN Rose Royale** — *Deep plum and velvet dark surfaces with warm champagne rose-gold accents.*
+5. **ZN Midnight Spire** — *Architectural midnight blue canvas with glowing gold highlights and crisp syntax.*
+6. **ZN Obsidian** — *True OLED pitch black background with shimmering volcanic obsidian sheen.*
+7. **ZN Solar Flare** — *High-contrast volcanic charcoal with vivid solar flame and ember accents.*
+8. **ZN Nordic** — *Crisp Arctic daylight atmosphere with balanced syntax contrast and cool slate tones.*
+9. **ZN Nordic Dark** — *Deep polar night palette with frosted cyan and ice blue highlights.*
+10. **ZN Cyberpunk** — *High-voltage neon pink and electric synthwave cyan on an ultra-deep void black.*
 
-After installation or update, the **ZIPNATION Theme Store** opens automatically.
+---
 
-You can reopen it anytime:
-- Status Bar item: `ZN Themes`
-- Command Palette: `Ctrl+Shift+P` → `ZIPNATION: Theme Store`
+## ✨ Features in v1.3.0
 
-### Store Features
-- Visual SVG previews for all 10 themes
-- One-click theme switching
-- FREE / VIP badge indicators
-- Universal VIP License activation
-- Real-time license status & countdown
-- Automatic fallback if license expires
+### 🌍 Multilingual Theme Store (EN / RU / UZ)
+- The built-in visual Theme Store defaults to **English (`EN`)**.
+- Instant, zero-flicker language switcher at the top: **`[ EN ]` `[ RU ]` `[ UZ ]`**.
+- Full translations for all theme cards, buttons, badges, license prompts, and feedback dialogs.
+- Your language preference is saved automatically across restarts.
 
-## Commands
+### 💬 In-Store Feedback & Bug Report Drawer
+- Send suggestions, feature requests, new theme ideas, or bug reports directly from inside the editor.
+- Click **`💬 Feedback`** in the top bar of the Theme Store.
+- Categorize your message: 💡 *Suggestion / Idea*, 🐛 *Bug Report*, or 💬 *Feedback*.
+- Delivered in real time to the developer telemetry dashboard.
 
-- `ZIPNATION: Theme Store` (`zipnation.openThemeStore`) — Open the visual Theme Store.
-- `ZIPNATION: Enter VIP License` (`zipnation.enterLicense`) — Activate VIP with a license code or token.
-- `ZIPNATION: View License Status` (`zipnation.licenseStatus`) — Check active VIP plan and remaining days.
+### 🔐 Universal VIP Licensing (Ed25519)
+- **Production-grade asymmetric cryptography**: High-security offline license verification using public-key cryptography.
+- **Cross-IDE Compatibility**: Works seamlessly across **VS Code**, **Cursor**, **Windsurf**, **Google Antigravity IDE**, and **VSCodium**.
+- **Flexible Durations**: 7-day, 30-day, 90-day, and 365-day licenses.
+- **Graceful Expiration**: If a license expires, the editor gracefully reverts to the free `ZN Night Gold` theme without interrupting your workflow.
 
-## Universal VIP Licensing (v1.1.0)
+---
 
-ZIPNATION VIP Themes features production-grade asymmetric cryptography (Ed25519):
-- **Durations Supported**: 7 days, 30 days, 90 days, 365 days.
-- **Cross-IDE Support**: 100% compatible with VS Code, Antigravity, Cursor, Windsurf, and VSCodium.
-- **Offline Capable**: Verified locally via embedded public key; private signing keys are never shipped in the extension.
-- **Privacy & Security**: Zero secrets or credentials in the client package.
+## 🚀 How to Use
+
+### 1. Open the Theme Store
+The store opens automatically after installation or update. You can reopen it at any time:
+- Click **`$(paintcan) ZN Themes`** in the bottom-right Status Bar.
+- Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and run:
+  ```
+  ZIPNATION: Theme Store
+  ```
+
+### 2. Activate VIP Access
+1. Open the Theme Store.
+2. In the VIP unlock field, enter your license code (`ZN-XXXX-XXXX-XXXX`) or raw `ZNLIC...` token.
+3. Click **🔓 Unlock VIP**. All 8 VIP themes will unlock instantly!
+
+Alternatively, activate via Command Palette:
+```
+Ctrl+Shift+P → ZIPNATION: Enter VIP License
+```
+
+---
+
+## ⌨️ Extension Commands
+
+| Command | Identifier | Description |
+|---|---|---|
+| **ZIPNATION: Theme Store** | `zipnation.openThemeStore` | Opens the visual interactive Theme Store |
+| **ZIPNATION: Enter VIP License** | `zipnation.enterLicense` | Prompts for a license code or token to unlock VIP |
+| **ZIPNATION: View License Status** | `zipnation.licenseStatus` | Displays remaining license duration and active plan |
+
+---
+
+## 🛡️ Security & Privacy
+
+- **Offline Verification**: Digital signatures are verified locally using an embedded public key. Your editor never sends your code, files, or sensitive information.
+- **Zero Client Secrets**: No private keys or administrative passwords exist in the extension code.
+- **Lightweight**: Zero third-party npm dependencies. Fast startup and minimal memory footprint.
+
+---
+
+© 2026 **ZIPNATION**. All rights reserved.

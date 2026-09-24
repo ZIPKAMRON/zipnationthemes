@@ -5,7 +5,7 @@ const { verifyLicenseToken, getDaysRemaining, formatExpiration, fetchLicenseByCo
 const { trackEvent } = require("./lib/telemetry");
 
 const FREE_THEME = "ZN Night Gold";
-const VERSION = "1.2.0";
+const VERSION = "1.3.0";
 
 const THEMES = [
   {
