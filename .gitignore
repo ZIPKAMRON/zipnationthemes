@@ -17,6 +17,10 @@ node_modules/
 !.env.example
 vip-codes.json
 secrets/
+keys/
+tools/
+*.pem
+*.key
 
 # Development/automation scripts
 *.ps1

@@ -10,4 +10,8 @@
 *.vsix.backup
 vip-codes.json
 tools/**
+test/**
+keys/**
+*.pem
+*.key
 node_modules/**
