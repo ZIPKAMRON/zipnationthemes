@@ -5,7 +5,7 @@ const { verifyLicenseToken, getDaysRemaining, formatExpiration, fetchLicenseByCo
 const { trackEvent, isTelemetryAllowed } = require("./lib/telemetry");
 
 const FREE_THEME = "ZN Night Gold";
-const VERSION = "1.3.1";
+const VERSION = "1.3.2";
 
 const THEMES = [
   {
@@ -626,11 +626,10 @@ body{
 }
 .hero-row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .hero-left{display:flex;align-items:center;gap:14px}
-.hero-logo{
-  width:48px;height:48px;border-radius:12px;background:${uiAccent}18;border:1px solid ${uiAccent}35;
-  display:grid;place-items:center;flex-shrink:0;
+.hero-logo-img{
+  width:46px;height:46px;border-radius:12px;object-fit:cover;
+  border:1.5px solid ${uiAccent}66;box-shadow:0 4px 16px rgba(0,0,0,0.35);flex-shrink:0;
 }
-.hero-logo-text{font-size:16px;font-weight:900;color:${uiAccent};letter-spacing:1px}
 .hero-title{font-size:15px;font-weight:800;margin-bottom:3px}
 .hero-copy{font-size:12px;color:var(--muted)}
 .hero-actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -785,7 +784,7 @@ button:active{transform:scale(.98)}
   <section class="hero">
     <div class="hero-row">
       <div class="hero-left">
-        <div class="hero-logo"><div class="hero-logo-text">ZN</div></div>
+        <img src="${znIconUri}" class="hero-logo-img" alt="ZIPNATION" />
         <div>
           <div class="hero-title" id="t-hero-title">${heroTitle}</div>
           <div class="hero-copy" id="t-hero-copy">${heroCopy}</div>

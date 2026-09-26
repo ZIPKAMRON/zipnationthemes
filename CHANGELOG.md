@@ -2,6 +2,13 @@
 
 All notable changes to the **ZIPNATION VIP Themes** extension will be documented in this file.
 
+## [1.3.2] - 2026-09-26
+
+### Branding & UI
+- **Official Brand Icon Integration in Theme Store**:
+  - Replaced text placeholder 'ZN' in the Theme Store hero section with the authentic glowing 3D ZIPNATION logo (`assets/icon.png`).
+  - Unified branding across all Theme Store views (header topbar & hero showcase).
+
 ## [1.3.1] - 2026-09-26
 
 ### Security & Privacy

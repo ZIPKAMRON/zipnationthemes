@@ -2,7 +2,7 @@
     "name":  "zipnation-vip-themes",
     "displayName":  "ZIPNATION VIP Themes",
     "description":  "ZIPNATION Theme Store: 2 free themes and 8 premium VIP themes for VS Code.",
-    "version":  "1.3.1",
+    "version":  "1.3.2",
     "publisher":  "zipnation",
     "repository":  {
                        "type":  "git",
