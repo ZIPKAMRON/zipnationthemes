@@ -2,7 +2,7 @@
     "name":  "zipnation-vip-themes",
     "displayName":  "ZIPNATION VIP Themes",
     "description":  "ZIPNATION Theme Store: 2 free themes and 8 premium VIP themes for VS Code.",
-    "version":  "1.3.0",
+    "version":  "1.3.1",
     "publisher":  "zipnation",
     "repository":  {
                        "type":  "git",
@@ -30,8 +30,19 @@
                      "dark-theme",
                      "light-theme"
                  ],
-    "contributes":  {
-                        "commands":  [
+    "contributes": {
+        "configuration": {
+            "title": "ZIPNATION VIP Themes",
+            "properties": {
+                "zipnation.telemetry.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable optional anonymous usage telemetry for ZIPNATION VIP Themes. Telemetry is strictly gated and will NEVER be sent if VS Code's global telemetry is disabled (vscode.env.isTelemetryEnabled).",
+                    "scope": "application"
+                }
+            }
+        },
+        "commands": [
                                          {
                                              "command":  "zipnation.openThemeStore",
                                              "title":  "ZIPNATION: Theme Store"

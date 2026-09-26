@@ -2,10 +2,10 @@ const vscode = require("vscode");
 const crypto = require("crypto");
 const http = require("http");
 const { verifyLicenseToken, getDaysRemaining, formatExpiration, fetchLicenseByCode, verifyLicenseOnline } = require("./lib/license");
-const { trackEvent } = require("./lib/telemetry");
+const { trackEvent, isTelemetryAllowed } = require("./lib/telemetry");
 
 const FREE_THEME = "ZN Night Gold";
-const VERSION = "1.3.0";
+const VERSION = "1.3.1";
 
 const THEMES = [
   {
@@ -284,7 +284,8 @@ async function activateWithToken(context, rawInput) {
     vscode.window.showInformationMessage("ZIPNATION: Verifying license with server...");
     const lookup = await fetchLicenseByCode(input);
     if (!lookup.success || !lookup.token) {
-      trackEvent("license_failed", { reason: lookup.error || "not_found", code_prefix: input.slice(0, 8) });
+      // Gated anonymous failure telemetry (no code prefix, no user input)
+      trackEvent("license_failed", { reason: "lookup_failed" });
       vscode.window.showErrorMessage(`ZIPNATION: ${lookup.error || "License not found or inactive."}`);
       return false;
     }
@@ -293,7 +294,8 @@ async function activateWithToken(context, rawInput) {
 
   const result = verifyLicenseToken(tokenToVerify);
   if (!result.valid) {
-    trackEvent("license_failed", { reason: result.state || result.reason || "invalid" });
+    // Gated anonymous failure telemetry (no sensitive identifiers)
+    trackEvent("license_failed", { reason: result.state || "invalid" });
     if (result.state === "EXPIRED") {
       vscode.window.showErrorMessage(`ZIPNATION: License expired on ${result.payload ? formatExpiration(result.payload.expires_at) : ""}.`);
     } else if (result.state === "REVOKED") {
@@ -312,7 +314,8 @@ async function activateWithToken(context, rawInput) {
   await context.globalState.update("vipLicenseId", payload.license_id);
   await context.globalState.update("vipCustomer", payload.customer_id);
 
-  trackEvent("license_activate", { license_id: payload.license_id, customer: payload.customer_id, duration: payload.duration_days });
+  // Gated anonymous activation telemetry (strictly duration only, NO customer name/email, NO license ID)
+  trackEvent("license_activate", { duration: payload.duration_days });
   vscode.window.showInformationMessage(`ZIPNATION VIP Active! Welcome, ${payload.customer_id}. Expires: ${formattedDate} (${daysLeft} days left).`);
   return true;
 }
@@ -372,12 +375,14 @@ async function checkLicenseStatusOnline(context) {
       }
 
       if (wasRevoked) {
-        trackEvent("license_revoked_enforced", { license_id: licId });
+        // Gated anonymous revocation telemetry (no license_id)
+        trackEvent("license_revoked_enforced", { reason: "revoked" });
         vscode.window.showWarningMessage(
           'ZIPNATION: VIP Litsenziyangiz bekor qilingan! Standart bepul "ZN Night Gold" mavzusiga qaytarildi.'
         );
       } else {
-        trackEvent("license_expired_enforced", { license_id: licId });
+        // Gated anonymous expiration telemetry (no license_id)
+        trackEvent("license_expired_enforced", { reason: "expired" });
         vscode.window.showWarningMessage(
           'ZIPNATION: VIP Litsenziyangiz muddati tugagan! Standart bepul "ZN Night Gold" mavzusiga qaytarildi.'
         );
@@ -1151,11 +1156,11 @@ async function openThemeStore(context) {
       render();
     }
     if (message.type === "sendFeedback") {
-      const info = getLicenseInfo(context);
+      // User-initiated explicit feedback message (no automatic PII attachment)
       const postData = JSON.stringify({
         type: message.feedbackType || "idea",
         message: message.message || "",
-        customer_id: message.sender || (info.payload ? info.payload.customer_id : "VS Code User"),
+        customer_id: message.sender || "VS Code User",
         ide: vscode.env.appName,
         version: VERSION
       });
@@ -1219,6 +1224,10 @@ async function openThemeStore(context) {
 // ──────────────────────── ACTIVATE ────────────────────────
 
 function activate(context) {
+  // Gated startup & install telemetry:
+  // Strictly gated by vscode.env.isTelemetryEnabled && zipnation.telemetry.enabled.
+  // If the user has disabled telemetry in VS Code or in extension settings,
+  // trackEvent() returns immediately with ZERO network requests.
   const seenVersion = context.globalState.get("zipnation.storeVersion");
   if (!seenVersion) trackEvent("install", { firstVersion: VERSION });
   trackEvent("startup", { version: VERSION });
@@ -1228,6 +1237,15 @@ function activate(context) {
   status.tooltip = "Open ZIPNATION Theme Store";
   status.command = "zipnation.openThemeStore";
   status.show();
+
+  // Listen to runtime telemetry changes so extension immediately respects user consent changes
+  if (typeof vscode.env.onDidChangeTelemetryEnabled === "function") {
+    context.subscriptions.push(
+      vscode.env.onDidChangeTelemetryEnabled(enabled => {
+        // Authoritative runtime check: changes take effect immediately across all calls
+      })
+    );
+  }
 
   context.subscriptions.push(
     status,
@@ -1246,7 +1264,7 @@ function activate(context) {
 
   guardTheme(context);
 
-  // Online revocation verification check
+  // Required license verification check (only executes if a VIP license key/token is saved)
   setTimeout(() => checkLicenseStatusOnline(context), 1200);
   const onlineCheckTimer = setInterval(() => checkLicenseStatusOnline(context), 60 * 1000);
   context.subscriptions.push({ dispose: () => clearInterval(onlineCheckTimer) });

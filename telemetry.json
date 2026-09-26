@@ -1,0 +1,119 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode/main/extensions/telemetry.schema.json",
+  "events": [
+    {
+      "name": "startup",
+      "properties": {
+        "version": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "ZIPNATION extension version running at startup"
+        },
+        "ideName": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Host editor application name (e.g. Visual Studio Code, Cursor, Windsurf)"
+        },
+        "ideVersion": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Host editor application version"
+        },
+        "os": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Host operating system platform (e.g. win32, linux, darwin)"
+        },
+        "arch": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "CPU architecture (e.g. x64, arm64)"
+        },
+        "locale": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Editor display language code (e.g. en, ru)"
+        }
+      }
+    },
+    {
+      "name": "install",
+      "properties": {
+        "firstVersion": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Initial version detected on first installation"
+        }
+      }
+    },
+    {
+      "name": "store_open",
+      "properties": {}
+    },
+    {
+      "name": "theme_used",
+      "properties": {
+        "theme": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Name of the applied theme (e.g. ZN Night Gold, ZN Emerald Royale)"
+        }
+      }
+    },
+    {
+      "name": "vip_blocked",
+      "properties": {
+        "theme": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Name of the VIP theme requested without active license"
+        },
+        "reason": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Trigger reason: store_click_unlicensed or unlicensed_direct_selection"
+        }
+      }
+    },
+    {
+      "name": "license_activate",
+      "properties": {
+        "duration": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Duration in days of the activated license plan (e.g. 30, 365)"
+        }
+      }
+    },
+    {
+      "name": "license_failed",
+      "properties": {
+        "reason": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "High-level non-sensitive failure state (e.g. lookup_failed, EXPIRED, REVOKED, invalid)"
+        }
+      }
+    },
+    {
+      "name": "license_revoked_enforced",
+      "properties": {
+        "reason": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Enforcement event when revoked license is cleared and reverted to free theme"
+        }
+      }
+    },
+    {
+      "name": "license_expired_enforced",
+      "properties": {
+        "reason": {
+          "classification": "SystemMetaData",
+          "purpose": "FeatureInsight",
+          "comment": "Enforcement event when expired license is cleared and reverted to free theme"
+        }
+      }
+    }
+  ]
+}

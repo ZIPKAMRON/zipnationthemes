@@ -1,4 +1,4 @@
-# ZIPNATION VIP Themes · v1.3.0
+# ZIPNATION VIP Themes · v1.3.1
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/zipnation.zipnation-vip-themes?color=d2ad37&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=zipnation.zipnation-vip-themes)
 [![Open VSX](https://img.shields.io/badge/Open%20VSX-v1.0.0-orange)](https://open-vsx.org/extension/zipnation/zipnation-vip-themes)
@@ -39,7 +39,7 @@
 - Send suggestions, feature requests, new theme ideas, or bug reports directly from inside the editor.
 - Click **`💬 Feedback`** in the top bar of the Theme Store.
 - Categorize your message: 💡 *Suggestion / Idea*, 🐛 *Bug Report*, or 💬 *Feedback*.
-- Delivered in real time to the developer telemetry dashboard.
+- Delivered directly to the developer team.
 
 ### 🔐 Universal VIP Licensing (Ed25519)
 - **Production-grade asymmetric cryptography**: High-security offline license verification using public-key cryptography.
@@ -81,10 +81,29 @@ Ctrl+Shift+P → ZIPNATION: Enter VIP License
 
 ---
 
-## 🛡️ Security & Privacy
+## 🛡️ Security, Privacy & Telemetry Compliance
 
-- **Offline Verification**: Digital signatures are verified locally using an embedded public key. Your editor never sends your code, files, or sensitive information.
-- **Zero Client Secrets**: No private keys or administrative passwords exist in the extension code.
+ZIPNATION is committed to complete user privacy and transparency:
+
+- **Strict Telemetry Consent Gating**:
+  - Telemetry is **strictly optional** and respects VS Code's global telemetry setting via the authoritative API: `vscode.env.isTelemetryEnabled`.
+  - If you disable telemetry in your editor (e.g. `telemetry.telemetryLevel: "off"` or `"crash"`), **absolutely NO optional telemetry or analytics event is ever sent**.
+  - Immediate runtime adaptation: Listens for `vscode.env.onDidChangeTelemetryEnabled` to apply changes instantly.
+- **Dedicated Extension Setting**:
+  - You can also selectively disable telemetry for this extension at any time via:
+    ```json
+    "zipnation.telemetry.enabled": false
+    ```
+  - Effective condition: `vscode.env.isTelemetryEnabled && zipnation.telemetry.enabled`. (The extension setting can never override VS Code's global disabled state).
+- **Zero Personally Identifiable Information (PII)**:
+  - We do **NOT** collect machine identifiers (`machineId`), device fingerprints, or hardware hashes.
+  - We do **NOT** collect usernames, email addresses, or IP addresses for analytics.
+  - We do **NOT** collect file contents, workspace paths, project names, or source code.
+- **Clear Architectural Separation**:
+  - Required license verification (cryptographic signature verification and explicit activation lookup) is completely separate from optional usage analytics.
+  - Transparent manifest: See [`telemetry.json`](telemetry.json) for the full list of anonymous events and metadata.
+- **Zero Client Secrets**:
+  - No private keys, Lemon Squeezy secrets, or admin credentials exist in the extension package.
 - **Lightweight**: Zero third-party npm dependencies. Fast startup and minimal memory footprint.
 
 ---
